@@ -19,7 +19,7 @@ const toPubDate = (dateStr) => {
 const urlGenerator = (base) => (uri) => `${base}/${uri}`;
 
 const webUrl = urlGenerator('https://podcast-18b82.web.app');
-const storageUrl = urlGenerator('https://firebasestorage.googleapis.com/v0/b/podcast-18b82.appspot.com/o/');
+const storageUrl = urlGenerator('https://firebasestorage.googleapis.com/v0/b/podcast-18b82.appspot.com/o');
 
 const feed = new Podcast({
   title: meta.title,
@@ -56,7 +56,7 @@ const feed = new Podcast({
 const makeEpisode = (episode) => ({
   title: episode.title,
   description: episode.description,
-  url: storageUrl(episode.storagePath),
+  url: storageUrl(episode.storagePath + '?alt=media'),
   categories: episode.categories,
   author: episode.author || meta.author,
   date: episode.date,
