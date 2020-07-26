@@ -18,7 +18,7 @@ const toPubDate = (dateStr) => {
 
 const urlGenerator = (base) => (uri) => `${base}/${uri}`;
 
-const webUrl = urlGenerator('https://podcast-18b82.web.app');
+const webUrl = urlGenerator('https://oldagechristianity.com');
 const storageUrl = urlGenerator('https://firebasestorage.googleapis.com/v0/b/podcast-18b82.appspot.com/o');
 
 const feed = new Podcast({
@@ -44,9 +44,8 @@ const feed = new Podcast({
   itunesExplicit: false,
   itunesCategory: [
     {
-      text: meta.categories[0],
-      subcats: meta.categories
-        .slice(1)
+      text: meta.itunes.category,
+      subcats: meta.itunes.subcategories
         .map((text) => ({ text })),
     },
   ],
@@ -64,6 +63,10 @@ const makeEpisode = (episode) => ({
   itunesExplicit: false,
   itunesSummary: episode.description,
   itunesNewsFeedUrl: webUrl('rss.xml'),
+  enclosure: {
+    url: storageUrl(episode.storagePath + '?alt=media'),
+  },
+  content: storageUrl(episode.storagePath + '?alt=media'),
 });
 
 const html = {
@@ -98,11 +101,6 @@ Promise.all([
   fs.writeFile(
     publicPath('rss.xml'),
     feed.buildXml(),
-    'utf8'
-  ),
-  fs.writeFile(
-    publicPath('rss.json'),
-    JSON.stringify(feed.items),
     'utf8'
   ),
   fs.writeFile(
