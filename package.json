@@ -5,9 +5,9 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "feed": "node -r esm ./bin/feed.js",
+    "build": "node -r esm ./bin/feed.js",
     "start": "firebase serve",
-    "deploy": "yarn feed && firebase deploy"
+    "deploy": "yarn build && firebase deploy"
   },
   "devDependencies": {
     "esm": "^3.2.25",
