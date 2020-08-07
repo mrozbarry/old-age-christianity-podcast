@@ -26,7 +26,7 @@ const feed = new Podcast({
   description: meta.description,
   feed_url: webUrl('rss.xml'),
   site_url: webUrl(''),
-  image_url: dumpUrl('logo-big-itunes.jpg'),
+  image_url: dumpUrl(meta.imagePath),
   author: meta.author,
   managingEditor: meta.editor,
   webMaster: meta.webMaster,
@@ -49,7 +49,7 @@ const feed = new Podcast({
         .map((text) => ({ text })),
     },
   ],
-  itunesImage: dumpUrl('logo-big-itunes.jpg'),
+  itunesImage: dumpUrl(meta.imagePath),
 });
 
 const makeEpisode = (episode) => ({
