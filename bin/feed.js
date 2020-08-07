@@ -20,7 +20,6 @@ const urlGenerator = (base) => (uri) => `${base}/${uri}`;
 
 const webUrl = urlGenerator('https://oldagechristianity.com');
 const dumpUrl = urlGenerator('https://dump.mrbarry.com');
-const storageUrl = urlGenerator('https://firebasestorage.googleapis.com/v0/b/podcast-18b82.appspot.com/o');
 
 const feed = new Podcast({
   title: meta.title,
@@ -56,7 +55,7 @@ const feed = new Podcast({
 const makeEpisode = (episode) => ({
   title: episode.title,
   description: episode.description,
-  url: storageUrl(episode.storagePath + '?alt=media'),
+  url: dumpUrl(episode.storagePath),
   categories: episode.categories,
   author: episode.author || meta.author,
   date: episode.date,
@@ -65,9 +64,9 @@ const makeEpisode = (episode) => ({
   itunesSummary: episode.description,
   itunesNewsFeedUrl: webUrl('rss.xml'),
   enclosure: {
-    url: storageUrl(episode.storagePath + '?alt=media'),
+    url: dumpUrl(episode.storagePath),
   },
-  content: storageUrl(episode.storagePath + '?alt=media'),
+  content: dumpUrl(episode.storagePath),
 });
 
 const html = {
