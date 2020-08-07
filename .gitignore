@@ -65,3 +65,5 @@ node_modules/
 .env
 
 audio
+public/index.html
+public/rss.xml
