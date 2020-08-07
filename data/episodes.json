@@ -2,7 +2,7 @@
   {
     "title": "Our first podcast",
     "description": "This is our very first and very awkward podcast. Enjoy familiar dog noises like walking, panting, heavy breathing, and snoring. Enjoy conversations and stories about corruption at bible college. And hear about why we want to make this podcast.",
-    "storagePath": "podcast1_edit.mp3",
+    "storagePath": "s01e01-first_episode.mp3",
     "date": "July 24, 2020",
     "categories": [
       "bible college",
@@ -15,7 +15,7 @@
   {
     "title": "Episode 2: Detecting New Thought in Your Church",
     "description": "Listen as we discuss sex cults, and the infiltration of new thought into your church.",
-    "storagePath": "podcast-2.mp3",
+    "storagePath": "s01e02-sex_cults_and_new_thought.mp3",
     "date": "August 2, 2020",
     "categories": [
       "new thought",
