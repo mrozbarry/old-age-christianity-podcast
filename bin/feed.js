@@ -19,6 +19,7 @@ const toPubDate = (dateStr) => {
 const urlGenerator = (base) => (uri) => `${base}/${uri}`;
 
 const webUrl = urlGenerator('https://oldagechristianity.com');
+const dumpUrl = urlGenerator('https://dump.mrbarry.com');
 const storageUrl = urlGenerator('https://firebasestorage.googleapis.com/v0/b/podcast-18b82.appspot.com/o');
 
 const feed = new Podcast({
@@ -26,7 +27,7 @@ const feed = new Podcast({
   description: meta.description,
   feed_url: webUrl('rss.xml'),
   site_url: webUrl(''),
-  image_url: webUrl('img/logo-big-itunes.jpg'),
+  image_url: dumpUrl('logo-big-itunes.jpg'),
   author: meta.author,
   managingEditor: meta.editor,
   webMaster: meta.webMaster,
@@ -49,7 +50,7 @@ const feed = new Podcast({
         .map((text) => ({ text })),
     },
   ],
-  itunesImage: webUrl('img/logo-big-itunes.jpg'),
+  itunesImage: dumpUrl('logo-big-itunes.jpg'),
 });
 
 const makeEpisode = (episode) => ({
