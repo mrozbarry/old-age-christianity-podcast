@@ -1,13 +1,14 @@
 import { promises as fs, readFileSync } from 'fs';
 import path from 'path';
 import Podcast from 'podcast';
+import pug from 'pug';
 
 import meta from '../data/meta.json';
 import episodes from '../data/episodes.json';
 
 const rootPath = path.resolve(__dirname, '..');
 const publicPath = (f = '') => path.join(rootPath, 'public', f);
-const dataPath = (f) => path.join(rootPath, 'data', f);
+const srcPath = (...f) => path.join(rootPath, 'src', ...f);
 
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 const toPubDate = (dateStr) => {
@@ -69,33 +70,21 @@ const makeEpisode = (episode) => ({
   content: dumpUrl(episode.storagePath),
 });
 
-const html = {
-  head: readFileSync(dataPath('head.html'), 'utf8').replace('{{description}}', meta.description),
-  foot: readFileSync(dataPath('foot.html'), 'utf8'),
-  episodeTemplate: readFileSync(dataPath('episode.html'), 'utf8'),
-  episodes: [],
-};
-
-const assembleEpisode  = (episode, index) => html.episodeTemplate
-  .replace('{{episode_number}}', index + 1)
-  .replace('{{title}}', episode.title)
-  .replace('{{description}}', episode.description)
-  .replace('{{audio_url}}', episode.url)
-  .replace('{{tags}}', [
-    episode.title,
-    episode.url,
-    ...episode.categories,
-  ].join(','))
-
 episodes
   .map(makeEpisode)
-  .forEach((episode, index) => {
+  .forEach((episode) => {
     feed.addItem(episode)
-    html.episodes = [
-      assembleEpisode(episode, index),
-      ...html.episodes,
-    ];
   });
+
+const webEpisodes = episodes.map((data, index) => ({
+  ...makeEpisode(data),
+  episodeNumber: index + 1,
+})).reverse();
+
+const pugFn= pug.compileFile(srcPath('pages', 'index.pug'));
+const html = pugFn({
+  episodes: webEpisodes,
+});
 
 Promise.all([
   fs.writeFile(
@@ -103,16 +92,16 @@ Promise.all([
     feed.buildXml(),
     'utf8'
   ),
+
   fs.writeFile(
     publicPath('index.html'),
-    `${html.head}
-${html.episodes.join("\n")}
-${html.foot}`,
+    html,
+    'utf8',
   ),
 ])
-  .then(() => console.log('rss built'))
+  .then(() => console.log('rss+html built'))
   .catch((err) => {
-    console.error('unable to build rss');
+    console.error('unable to build rss+html');
     console.error(err);
     return -1;
   })

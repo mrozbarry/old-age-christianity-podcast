@@ -1,0 +1,51 @@
+doctype html
+html( lang="en" )
+  head
+    meta( charset="utf-8" )
+    meta( name="viewport" content="width=device-width, initial-scale=1" )
+    title Old Age Christianity
+
+    link( rel="alternate" type="application/rss+xml"  title="Podcast RSS Feed for Old Age Christianity"  href="/rss.xml" )
+    link( href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet" )
+    script( src="https://kit.fontawesome.com/57cb566a11.js" crossorigin="anonymous" )
+
+    style( type="text/css" ).
+      body * {
+        box-sizing: border-box;
+      }
+  body.flex.flex-col.min-h-screen
+    nav.bg-gray-700.text-white.py-2.px-6.mb-4
+      .container.mx-auto.flex.flex-row.items-center.justify-start
+        h1.font-bold Old Age Christianity
+        .flex-grow
+        a.underline.px-2( href="https://www.facebook.com/groups/339233737076236/" )
+          | Discuss on Facebook
+          i.fab.fa-facebook-square
+        a.underline.px-2( href="/rss.xml" )
+          | RSS Feed
+          i.fas.fa-rss
+
+    section.container.mx-auto.flex.flex-col.justify-start.items-center
+      header.px-6.py-4.font-lg( class="sm:px-0" )
+        img.mx-auto.w-full( class="sm:w-1/2" src="/img/logo-transparent.jpg" alt="Old Age Christianity" )
+        p.mb-4= description
+
+      .grid-cols-2.w-full( class="sm:grid" )
+        div.text-center.my-8
+          a.p-8.underline( href="https://podcasts.apple.com/us/podcast/old-age-christianity/id1526845958" target="_blank" )
+            i( class="fab fa-apple" )
+            |
+            | Listen on Apple Podcasts
+        div.text-center.my-8
+          a.p-8.underline( href="https://podcasts.google.com/feed/aHR0cHM6Ly9vbGRhZ2VjaHJpc3RpYW5pdHkuY29tL3Jzcy54bWw" target="_blank" )
+            i( class="fab fa-google" )
+            |
+            | Listen on Google Podcasts
+
+      each episode, index in episodes
+        include ../components/episode.pug
+
+    .flex-grow
+
+    .mx-auto.py-2.text-center &copy; 2020 Alex and Erinn Barry
+
